@@ -1,16 +1,12 @@
-const path = require('path')
 const chokidar = require('chokidar')
 const { initMessage, message } = require('../lib/message')
-const args = require('../lib/arguments')
 const files = require('../lib/files')
+const Config = require('../lib/config')
 
-const pwd = process.env.PWD + '/'
-const input = path.resolve(pwd, args.getRequired('input-dir'))
-const output = path.resolve(pwd, args.getRequired('output'))
+const config = new Config()
 
-initMessage({ pwd, input, output })
+initMessage(config)
 
-const isCache = (path) => path.indexOf('__cache__') >= 0
 let timeoutId = null
 
 message({ action: 'Initialization...' })
@@ -20,8 +16,9 @@ setTimeout(() => {
 
   function onChange (path) {
     message({ action: 'Indexing...' })
+    const isNotOutput = path !== config.output
 
-    if (isCache(path) === false) {
+    if (isNotOutput) {
       clearTimeout(timeoutId)
       timeoutId = setTimeout(() => {
         createStyleCache().then(() => message({ done: true }))
@@ -29,20 +26,20 @@ setTimeout(() => {
     }
   }
 
-  chokidar.watch(input, { persistent: true, ignoreInitial: true })
+  chokidar.watch(config.input, { persistent: true, ignoreInitial: true })
     .on('add', path => onChange(path))
     .on('unlink', path => onChange(path))
 }, 500)
 
 function createStyleCache () {
-  return files.getAllFrom(input)
+  return files.getAllFrom(config.input)
     .then(array => {
       let fileContent = ''
       for (const file of array) {
-        const fileSrc = file.replace(pwd, '')
+        const fileSrc = file.replace(config.pwd, '')
         if (fileSrc.indexOf('__cache__') >= 0) continue
         fileContent += `@import "${fileSrc}"\n`
       }
-      return files.writeTextIntoFile(output, fileContent)
+      return files.writeTextIntoFile(config.output, fileContent)
     })
 }
