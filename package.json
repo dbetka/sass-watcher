@@ -1,6 +1,6 @@
 {
   "name": "@dbetka/sass-watcher",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Script to generate file with cached sass imports.",
   "license": "MIT",
   "main": "./dist/index.js",
