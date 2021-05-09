@@ -9,13 +9,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dbetka/js-plugin-template.git"
+    "url": "git+https://github.com/dbetka/sass-watcher.git"
   },
   "author": "dbetka",
   "bugs": {
-    "url": "https://github.com/dbetka/js-plugin-template/issues"
+    "url": "https://github.com/dbetka/sass-watcher/issues"
   },
-  "homepage": "https://github.com/dbetka/js-plugin-template#readme",
+  "homepage": "https://github.com/dbetka/sass-watcher#readme",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "chokidar": "^3.5.1",
