@@ -2,8 +2,8 @@
 Script to generate file with cached sass imports.
 
 ## Installation
-```
-npm i
+```bash
+npm i -D @dbetka/sass-watcher
 ```
 
 ## Usage
