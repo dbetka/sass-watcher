@@ -38,8 +38,8 @@ function createStyleCache () {
     .then(array => {
       let fileContent = ''
       for (const file of array) {
+        if (file === config.output) continue
         const fileSrc = file.replace(config.pwd, '')
-        if (fileSrc.indexOf('__cache__') >= 0) continue
         fileContent += `@import "${fileSrc}"\n`
       }
       return files.writeTextIntoFile(config.output, fileContent)
